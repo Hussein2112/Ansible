@@ -1,0 +1,43 @@
+---
+- name: Install apache webserver and Enable firewall on Centos Servers
+  hosts: centos
+  become: yes
+  tasks:
+  - name: install httpd
+    yum:
+      name: httpd
+      state: present
+  - name: start httpd
+    service:
+      name: httpd
+      state: started
+      enabled: no
+  - name: add httpd to  firewall
+    firewalld:
+      service: http
+      permanent: yes
+      immediate: yes
+      state: enabled
+  - name: Run a script for the index.html file
+    script: hello.sh
+#
+- name: Install nginx on ubuntu servers
+  hosts: ubuntu
+  become: yes
+  tasks:
+  - name: install nginx 
+    apt: name=nginx state=latest
+  - name: start nginx
+    service:
+     name: nginx
+     state: started
+     enabled: yes
+  - name: add nginx to  firewalld
+    firewalld:
+     port: 80/tcp
+     #service: nginx
+     permanent: yes
+     immediate: yes
+     state: enabled
+  - name: Run a script for the index.html file
+    script: hello.sh

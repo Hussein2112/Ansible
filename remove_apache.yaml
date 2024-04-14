@@ -1,0 +1,18 @@
+---
+- name: Remove apache webserver
+  hosts: all
+  tasks:
+  - name: remove httpd from  firewall
+    firewalld:
+      service: http
+      permanent: yes
+      state: disabled
+  - name: stop httpd
+    service:
+      name: httpd
+      state: stopped
+      enabled: false
+  - name: Remove httpd
+    yum:
+      name: httpd
+      state: removed

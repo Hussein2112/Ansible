@@ -1,0 +1,13 @@
+---
+- name: create users using a loop from a list
+  hosts: all
+  vars_files: vars/students.txt
+  tasks:
+  - name: create users
+    user:
+      name: "{{ item.username }}"
+      state: present
+      password: "{{ item.password }}"
+      #password: "{{ item.password | password_hash('sha512') }}"
+    #with_items: "{{ students }}"
+    loop: "{{ students }}"

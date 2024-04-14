@@ -1,0 +1,11 @@
+[centos]
+ansible1
+ansible2
+ansible3
+ansible4
+ansible5
+
+[web]
+server1
+server2
+server3

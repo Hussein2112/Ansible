@@ -1,0 +1,14 @@
+---
+- name: create users from the csv
+  become: true
+  hosts: all
+  tasks:
+    user:
+      name: "{{ item.Username }}"
+      uid: "{{ item.UID }}"
+      groups: "{{ item.Groups }}"
+      append: true
+      password: "{{ item.Password | password_hash('sha512') }}"
+      comment: "{{ item.First_Name }} {{ item.Last_Name }}"
+      state: present
+  loop: "{{ user_list.list }}"

@@ -1,0 +1,39 @@
+---
+- name: Remove apache webserver and disable firewall port  on Centos Servers
+  hosts: centos
+  become: yes
+  tasks:
+  - name: stop httpd
+    service:
+      name: httpd
+      state: stopped
+      enabled: no
+  - name: Remove httpd
+    yum:
+      name: httpd
+      state: removed
+  - name: Remove httpd from  firewall
+    firewalld:
+      service: http
+      permanent: yes
+      immediate: yes
+      state: disabled
+#
+- name: Remove nginx on ubuntu servers
+  hosts: ubuntu
+  become: yes
+  tasks:
+  - name: stop nginx
+    service:
+     name: nginx
+     state: stopped
+     enabled: no
+  - name: Remove nginx 
+    apt: name=nginx state=absent
+  - name: Remove nginx port from  firewalld
+    firewalld:
+     port: 80/tcp
+     #service: nginx
+     permanent: yes
+     immediate: yes
+     state: disabled

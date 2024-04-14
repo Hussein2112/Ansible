@@ -1,0 +1,16 @@
+---
+- name: remove users
+  hosts: all
+  vars:
+    users:
+    - pieter
+    - blair
+    - sharon
+    - bill
+    - ashley
+  tasks:
+  - user:
+      name: "{{ item }}"
+      state: present
+#      force: yes
+    loop: "{{ users }}"
